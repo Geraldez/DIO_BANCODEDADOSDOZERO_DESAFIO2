@@ -26,7 +26,7 @@ Modelo final com a implementação da tabela associativa `ServicoOS` e normaliza
 Para facilitar a avaliação e execução, o projeto está dividido em:
 
 1.  **`cria_tabelas_ddl.sql`**: Script de criação de todas as tabelas e definição de constraints.
-2.  **`insercao_de_dados_dml.sql`**: Povoamento do banco com dados de teste, incluindo o novo catálogo de serviços.
+2.  **`insercao_de_dados_dml.sql`** inserção de dados fictcios no banco de dados oficina_externa, qualquer semelhança com dados pessoais da vida real é mera coincidencia.
 3.  **`consulta_dql.sql`**: Conjunto de queries para análise de dados, incluindo filtros com `LIKE`, ordenações complexas e uso de subqueries.
 
 ##  Como Executar
