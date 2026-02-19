@@ -1,38 +1,38 @@
 # Sistema de Gerenciamento de Oficina Mecânica 
 
-Este projeto consiste na modelagem e implementação de um banco de dados relacional para o controle operacional de uma oficina mecânica, cobrindo desde o cadastro de clientes até a finalização do pagamento das Ordens de Serviço (OS).
+Este projeto consiste na modelagem e implementação de um banco de dados relacional para o controle operacional de uma oficina mecânica. O sistema gerencia desde o cadastro de clientes e veículos até a execução de serviços por equipes especializadas e o processamento de pagamentos.
 
-##  Estrutura de Arquivos
+##  Modelagem do Sistema
 
-Para garantir as boas práticas de desenvolvimento, o projeto foi segmentado nos seguintes arquivos:
+A estrutura foi pensada para garantir a integridade dos dados e a rastreabilidade financeira. O processo de design está documentado nos diagramas abaixo:
 
-1.  **`cria_tabelas_ddl.sql`**: Contém o script de **Data Definition Language**. Define toda a estrutura do banco, incluindo tabelas, chaves primárias, chaves estrangeiras e restrições de integridade.
-2.  **`insercao_de_dados_dml.sql`**: Contém o script de **Data Manipulation Language**. Realiza o povoamento das tabelas com dados realistas para testes de fluxo de negócio.
-3.  **`consulta_dql.sql`**: Contém o script de **Data Query Language**. Reúne as consultas complexas desenvolvidas para atender aos requisitos do desafio e gerar relatórios gerenciais.
+### 1. Projeto Lógico Original
+Esquema conceitual inicial que serviu de base para o desenvolvimento:
+![Projeto Lógico Original](./oficinaMecanicaProjetoDoZero.png)
 
-##  Destaques da Modelagem: A Tabela `ServicoOS`
-
-Um dos pontos centrais desta modelagem foi a criação da tabela **`ServicoOS`**. Ela atua como uma tabela associativa (N:M) entre a Ordem de Serviço e o catálogo de serviços (`TabServico`).
-
-**Por que essa tabela é importante?**
-- **Flexibilidade**: Permite que uma única Ordem de Serviço tenha múltiplos tipos de serviços vinculados (ex: Alinhamento + Troca de Óleo).
-- **Histórico de Preços**: Armazena o `valorCobrado` no momento da execução, garantindo que, se o preço no catálogo (`TabServico`) mudar no futuro, o valor registrado na OS histórica permaneça intacto.
+### 2. Projeto Lógico Final (Refinado)
+Modelo final com a implementação da tabela associativa `ServicoOS` e normalização das entidades:
+![Projeto Lógico Final](./oficinaMecanicaProjetoDoZero2.png)
 
 
+##  Destaques Técnicos
 
-##  Requisitos Técnicos Implementados
+- **Tabela `ServicoOS`**: Implementação crucial para gerenciar o relacionamento N:M entre Ordens de Serviço e o catálogo de serviços (`TabServico`). Ela permite que uma OS tenha múltiplos serviços e preserve o valor cobrado historicamente.
+- **Gestão de Equipes**: Uso da tabela `Equipe` para permitir que múltiplos mecânicos colaborem em uma única Ordem de Serviço de forma organizada.
+- **Rastreabilidade**: Separação clara entre peças (`PecaServico`) e serviços (`ServicoOS`) para detalhamento preciso da fatura do cliente.
 
-O arquivo **`consulta_dql.sql`** demonstra o domínio das seguintes funcionalidades:
-- **Agrupamentos**: `GROUP BY` para métricas de produtividade por equipe.
-- **Ordenação**: `ORDER BY` para organizar o catálogo de serviços por valor e nome.
-- **Filtros de Grupo**: `HAVING` para identificar equipes com faturamento acima da meta.
-- **Subqueries**: Consultas avançadas para identificar serviços com valor acima da média.
-- **Junções**: `JOIN` múltiplo entre Cliente, Veículo, OS e Serviços para visão 360º do atendimento.
+##  Estrutura de Scripts SQL
 
-##  Como Executar o Projeto
-1. Crie o schema utilizando o arquivo `cria_tabelas_ddl.sql`.
-2. Popule o banco com o arquivo `insercao_de_dados_dml.sql`.
-3. Execute as análises contidas em `consulta_dql.sql`.
+Para facilitar a avaliação e execução, o projeto está dividido em:
+
+1.  **`cria_tabelas_ddl.sql`**: Script de criação de todas as tabelas e definição de constraints.
+2.  **`insercao_de_dados_dml.sql`**: Povoamento do banco com dados de teste, incluindo o novo catálogo de serviços.
+3.  **`consulta_dql.sql`**: Conjunto de queries para análise de dados, incluindo filtros com `LIKE`, ordenações complexas e uso de subqueries.
+
+##  Como Executar
+1. Execute o script **DDL** para criar o schema.
+2. Popule o banco com o script **DML**.
+3. Utilize o script **DQL** para validar os relatórios e a lógica do banco.
 
 ---
-*Projeto desenvolvido como parte do desafio de formação em Banco de Dados da DIO.*
+*Projeto desenvolvido para o desafio de projeto da formação de Banco de Dados da DIO.*
